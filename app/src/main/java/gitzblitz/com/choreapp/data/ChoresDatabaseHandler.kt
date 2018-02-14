@@ -9,6 +9,7 @@ import android.util.Log
 import gitzblitz.com.choreapp.model.*
 import java.text.DateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Created by george.ngethe on 14/02/2018.
@@ -69,6 +70,34 @@ class ChoresDatabaseHandler(context: Context) : SQLiteOpenHelper(context, DATABA
         var formatedDate = dateFormat.format(Date(cursor.getLong(cursor.getColumnIndex(KEY_CHORE_ASSIGNED_TIME))).time)
 
         return chore
+    }
+
+    fun readChores(): ArrayList<Chore>{
+        var db: SQLiteDatabase = writableDatabase
+
+        var list: ArrayList<Chore> = ArrayList()
+        var selectAll = "SELECT * FROM " + TABLE_NAME
+
+        var cursor: Cursor = db.rawQuery(selectAll, null)
+
+
+        if (cursor.moveToFirst()) {
+            do {
+                var chore = Chore()
+
+                chore.id = cursor.getInt(cursor.getColumnIndex(KEY_ID))
+                chore.choreName = cursor.getString(cursor.getColumnIndex(KEY_CHORE_NAME))
+                chore.assignedTo = cursor.getString(cursor.getColumnIndex(KEY_CHORE_ASSIGNED_TO))
+                chore.timeAssigned = cursor.getLong(cursor.getColumnIndex(KEY_CHORE_ASSIGNED_TIME))
+                chore.assignedBy = cursor.getString(cursor.getColumnIndex(KEY_CHORE_ASSIGNED_BY))
+
+                list.add(chore)
+
+            }while (cursor.moveToNext())
+        }
+
+        return list
+
     }
 
     fun updateChore(chore: Chore): Int {
