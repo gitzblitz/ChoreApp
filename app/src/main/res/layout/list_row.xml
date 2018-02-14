@@ -45,13 +45,23 @@
             <TextView
                 android:id="@+id/listAssignedBy"
                 android:layout_marginStart="10dp"
-                android:padding="5dp"
+                android:padding="4dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@id/imageViewId"
                 android:layout_below="@+id/listChoreName"
                 android:layout_centerVertical="true"
                 android:text="Assigned by" />
+            <TextView
+                android:id="@+id/listAssignedTo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Assigned To"
+                android:layout_marginStart="10dp"
+                android:padding="4dp"
+                android:textStyle="italic"
+                android:layout_below="@id/listAssignedBy"
+                android:layout_toEndOf="@id/imageViewId"/>
 
             <TextView
                 android:layout_width="wrap_content"

@@ -1,5 +1,8 @@
 package gitzblitz.com.choreapp.model
 
+import java.text.DateFormat
+import java.util.*
+
 /**
  * Created by george.ngethe on 14/02/2018.
  */
@@ -17,4 +20,13 @@ class Chore() {
         this.timeAssigned = timeAssigned
         this.id = id
     }
+    fun showHumanDate(timeAssigned: Long): String {
+
+        var dateFormat: java.text.DateFormat = DateFormat.getDateInstance()
+        var formattedDate: String = dateFormat.format(Date(timeAssigned).time)
+
+        return "Created: ${formattedDate}"
+
+    }
+
 }
