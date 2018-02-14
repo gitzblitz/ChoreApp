@@ -1,7 +1,8 @@
-package gitzblitz.com.choreapp
+package gitzblitz.com.choreapp.activity
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import gitzblitz.com.choreapp.R
 
 class MainActivity : AppCompatActivity() {
 
