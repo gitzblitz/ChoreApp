@@ -13,11 +13,11 @@ import java.util.*
 /**
  * Created by george.ngethe on 14/02/2018.
  */
-class ChoresDatabaseHandler(context: Context):SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
+class ChoresDatabaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
     override fun onCreate(db: SQLiteDatabase?) {
         // SQL
-        var CREATE_CHORE_TABLE = "CREATE TABLE "+ TABLE_NAME + "(" + KEY_ID + " INTEGER PRIMARY KEY," +
+        var CREATE_CHORE_TABLE = "CREATE TABLE " + TABLE_NAME + "(" + KEY_ID + " INTEGER PRIMARY KEY," +
                 KEY_CHORE_NAME + " TEXT," +
                 KEY_CHORE_ASSIGNED_BY + " TEXT," +
                 KEY_CHORE_ASSIGNED_TO + " TEXT," +
@@ -35,7 +35,7 @@ class ChoresDatabaseHandler(context: Context):SQLiteOpenHelper(context, DATABASE
     }
 
     /*CRUD operations*/
-    fun createChore(chore: Chore){
+    fun createChore(chore: Chore) {
         var db: SQLiteDatabase = writableDatabase
 
         var values: ContentValues = ContentValues()
@@ -50,9 +50,9 @@ class ChoresDatabaseHandler(context: Context):SQLiteOpenHelper(context, DATABASE
         db.close()
     }
 
-    fun readChore(id:Int):Chore{
+    fun readChore(id: Int): Chore {
         var db: SQLiteDatabase = writableDatabase
-        var cursor:Cursor = db.query(TABLE_NAME, arrayOf(KEY_ID, KEY_CHORE_NAME, KEY_CHORE_ASSIGNED_BY,
+        var cursor: Cursor = db.query(TABLE_NAME, arrayOf(KEY_ID, KEY_CHORE_NAME, KEY_CHORE_ASSIGNED_BY,
                 KEY_CHORE_ASSIGNED_TIME, KEY_CHORE_ASSIGNED_TO), KEY_ID + "=?",
                 arrayOf(id.toString()), null, null, null)
 
@@ -69,6 +69,32 @@ class ChoresDatabaseHandler(context: Context):SQLiteOpenHelper(context, DATABASE
         var formatedDate = dateFormat.format(Date(cursor.getLong(cursor.getColumnIndex(KEY_CHORE_ASSIGNED_TIME))).time)
 
         return chore
+    }
 
+    fun updateChore(chore: Chore): Int {
+        var db: SQLiteDatabase = writableDatabase
+
+        var values: ContentValues = ContentValues()
+        values.put(KEY_CHORE_NAME, chore.choreName)
+        values.put(KEY_CHORE_ASSIGNED_BY, chore.assignedBy)
+        values.put(KEY_CHORE_ASSIGNED_TO, chore.assignedTo)
+        values.put(KEY_CHORE_ASSIGNED_TIME, System.currentTimeMillis())
+
+        //update a row
+        return db.update(TABLE_NAME, values, KEY_ID + "=?", arrayOf(chore.id.toString()))
+    }
+
+    fun deleteChore(chore: Chore) {
+        var db: SQLiteDatabase = writableDatabase
+        db.delete(TABLE_NAME, KEY_ID + "=?", arrayOf(chore.id.toString()))
+        db.close()
+    }
+
+    fun getChoresCount(): Int {
+        var db: SQLiteDatabase = writableDatabase
+        var countQuery = "SELECT * FROM " + TABLE_NAME
+        var cursor: Cursor = db.rawQuery(countQuery, null)
+
+        return cursor.count
     }
 }
