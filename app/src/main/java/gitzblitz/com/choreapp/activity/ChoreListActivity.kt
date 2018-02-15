@@ -32,6 +32,8 @@ class ChoreListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chore_list)
 
+        setTitle(R.string.chore_list_activity_title)
+
         databaseHandler = ChoresDatabaseHandler(this)
 
         choreList = ArrayList<Chore>()
@@ -90,6 +92,7 @@ class ChoreListActivity : AppCompatActivity() {
 
         dialogBuilder = AlertDialog.Builder(this).setView(view)
         dialog = dialogBuilder!!.create()
+        dialog!!.setTitle(R.string.chore_popup_add_title)
         dialog!!.show()
 
 

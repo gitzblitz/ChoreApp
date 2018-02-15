@@ -94,6 +94,7 @@ class ChoreListAdapter(private val list: ArrayList<Chore>, private val context: 
 
             dialogBuilder = AlertDialog.Builder(mContext).setView(view)
             dialog = dialogBuilder!!.create()
+            dialog.setTitle(R.string.chore_popup_update_title)
             dialog?.show()
 
             popSaveButton.setOnClickListener {
