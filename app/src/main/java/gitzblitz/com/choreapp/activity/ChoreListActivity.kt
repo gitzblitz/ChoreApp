@@ -39,9 +39,7 @@ class ChoreListActivity : AppCompatActivity() {
         layoutManager = LinearLayoutManager(this)
         adapter = ChoreListAdapter(choreListItems!!, this)
 
-
         //setup view & recycler list
-
         choreRecyclerView.layoutManager = layoutManager
 
         choreRecyclerView.adapter = adapter
@@ -49,16 +47,14 @@ class ChoreListActivity : AppCompatActivity() {
         choreList  = databaseHandler!!.readChores()
         choreList!!.reverse()
 
-
-
 //
         for (c in choreList!!.iterator()){
             Log.d("List", c.choreName)
             val chore = Chore()
             chore.id = c.id
-            chore.choreName = c.choreName
-            chore.assignedBy = c.assignedBy
-            chore.assignedTo = c.assignedTo
+            chore.choreName = "Chore: ${c.choreName}"
+            chore.assignedBy = "Assigned By: ${c.assignedBy}"
+            chore.assignedTo = "Assigned To: ${c.assignedTo}"
             chore.showHumanDate(c.timeAssigned!!)
 
             choreListItems!!.add(chore)

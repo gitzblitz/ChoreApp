@@ -7,9 +7,6 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 import gitzblitz.com.choreapp.model.*
-import java.text.DateFormat
-import java.util.*
-import kotlin.collections.ArrayList
 
 /**
  * Created by george.ngethe on 14/02/2018.
@@ -66,13 +63,10 @@ class ChoresDatabaseHandler(context: Context) : SQLiteOpenHelper(context, DATABA
         chore.assignedBy = cursor.getString(cursor.getColumnIndex(KEY_CHORE_ASSIGNED_BY))
         chore.timeAssigned = cursor.getLong(cursor.getColumnIndex(KEY_CHORE_ASSIGNED_TIME))
 
-//        var dateFormat: java.text.DateFormat = DateFormat.getDateInstance()
-//        var formatedDate = dateFormat.format(Date(cursor.getLong(cursor.getColumnIndex(KEY_CHORE_ASSIGNED_TIME))).time)
-
         return chore
     }
 
-    fun readChores(): ArrayList<Chore>{
+    fun readChores(): ArrayList<Chore> {
         var db: SQLiteDatabase = writableDatabase
 
         var list: ArrayList<Chore> = ArrayList()
@@ -93,7 +87,7 @@ class ChoresDatabaseHandler(context: Context) : SQLiteOpenHelper(context, DATABA
 
                 list.add(chore)
 
-            }while (cursor.moveToNext())
+            } while (cursor.moveToNext())
         }
 
         return list

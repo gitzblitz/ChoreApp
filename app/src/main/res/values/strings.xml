@@ -2,6 +2,7 @@
     <string name="app_name">ChoreApp</string>
     <string name="enter_chore">Enter a chore</string>
     <string name="save">Save Chore</string>
+    <string name="update_chore">Update Chore</string>
     <string name="assign_to">Assigned to…</string>
     <string name="assign_by">Assigned by…</string>
     <string name="image_description">Icon for the chore</string>
