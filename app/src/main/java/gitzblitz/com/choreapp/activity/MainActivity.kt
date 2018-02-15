@@ -1,20 +1,15 @@
 package gitzblitz.com.choreapp.activity
 
-import android.app.ProgressDialog
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
 import gitzblitz.com.choreapp.R
-import gitzblitz.com.choreapp.data.ChoreListAdapter
 import gitzblitz.com.choreapp.data.ChoresDatabaseHandler
 import gitzblitz.com.choreapp.model.Chore
-import kotlinx.android.synthetic.main.activity_chore_list.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -30,20 +25,22 @@ class MainActivity : AppCompatActivity() {
 
         databaseHandler = ChoresDatabaseHandler(this)
         progressBar = ProgressBar(this)
+        // check if db has a count then navigate to chore list activity
+        checkDB()
 
         btnSaveChore.setOnClickListener {
 
             progressBar!!.isIndeterminate = true
             progressBar!!.visibility = View.VISIBLE
-            if (!TextUtils.isEmpty(enterChoreId.text.toString())
-                    && !TextUtils.isEmpty(assignToId.text.toString())
-                    && !TextUtils.isEmpty(assignById.text.toString())){
+            if (!TextUtils.isEmpty(popupEnterChoreName.text.toString())
+                    && !TextUtils.isEmpty(popupAssignToId.text.toString())
+                    && !TextUtils.isEmpty(popupAssignById.text.toString())){
                 // save to db
 
                 var chore = Chore()
-                chore.choreName = enterChoreId.text.toString()
-                chore.assignedTo = assignToId.text.toString()
-                chore.assignedBy = assignById.text.toString()
+                chore.choreName = popupEnterChoreName.text.toString()
+                chore.assignedTo = popupAssignToId.text.toString()
+                chore.assignedBy = popupAssignById.text.toString()
                 saveToDB(chore)
 
                 progressBar!!.visibility = View.GONE
@@ -55,19 +52,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-//
-//        var chore = Chore()
-//        chore.choreName = "Clean room 2"
-//        chore.assignedTo = "Joe"
-//        chore.assignedBy = "Gitz"
-//
-//        databaseHandler!!.createChore(chore)
-//
-//        //read from database
-//
-//        var chores: Chore = databaseHandler!!.readChore(2)
-//
-//        Log.d("Item: ", chores.choreName)
+    }
+
+    fun checkDB() {
+        if (databaseHandler!!.getChoresCount() > 0){
+            startActivity(Intent(this, ChoreListActivity::class.java))
+        }
     }
 
     fun saveToDB(chore: Chore){

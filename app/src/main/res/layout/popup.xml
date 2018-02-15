@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="gitzblitz.com.choreapp.activity.MainActivity">
+    android:layout_height="wrap_content"
+    android:padding="24dp">
 
     <EditText
         android:id="@+id/popupEnterChoreName"
@@ -12,7 +12,6 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="68dp"
         android:ems="10"
         android:hint="@string/enter_chore"
         android:inputType="textPersonName"
@@ -52,12 +51,12 @@
         app:layout_constraintTop_toBottomOf="@+id/popupAssignToId" />
 
     <Button
-        android:id="@+id/btnSaveChore"
+        android:id="@+id/popupBtnSaveChore"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="92dp"
+        android:layout_marginTop="40dp"
         android:background="@android:color/holo_green_light"
         android:text="@string/save"
         android:textColor="@android:color/background_light"
@@ -65,4 +64,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/popupAssignById" />
+
 </android.support.constraint.ConstraintLayout>
