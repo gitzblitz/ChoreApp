@@ -66,8 +66,8 @@ class ChoresDatabaseHandler(context: Context) : SQLiteOpenHelper(context, DATABA
         chore.assignedBy = cursor.getString(cursor.getColumnIndex(KEY_CHORE_ASSIGNED_BY))
         chore.timeAssigned = cursor.getLong(cursor.getColumnIndex(KEY_CHORE_ASSIGNED_TIME))
 
-        var dateFormat: java.text.DateFormat = DateFormat.getDateInstance()
-        var formatedDate = dateFormat.format(Date(cursor.getLong(cursor.getColumnIndex(KEY_CHORE_ASSIGNED_TIME))).time)
+//        var dateFormat: java.text.DateFormat = DateFormat.getDateInstance()
+//        var formatedDate = dateFormat.format(Date(cursor.getLong(cursor.getColumnIndex(KEY_CHORE_ASSIGNED_TIME))).time)
 
         return chore
     }
@@ -113,9 +113,9 @@ class ChoresDatabaseHandler(context: Context) : SQLiteOpenHelper(context, DATABA
         return db.update(TABLE_NAME, values, KEY_ID + "=?", arrayOf(chore.id.toString()))
     }
 
-    fun deleteChore(chore: Chore) {
+    fun deleteChore(id: Int) {
         var db: SQLiteDatabase = writableDatabase
-        db.delete(TABLE_NAME, KEY_ID + "=?", arrayOf(chore.id.toString()))
+        db.delete(TABLE_NAME, KEY_ID + "=?", arrayOf(id.toString()))
         db.close()
     }
 
