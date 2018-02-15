@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import gitzblitz.com.choreapp.R
 import gitzblitz.com.choreapp.data.ChoreListAdapter
 import gitzblitz.com.choreapp.data.ChoresDatabaseHandler
@@ -48,11 +50,28 @@ class ChoreListActivity : AppCompatActivity() {
             chore.choreName = c.choreName
             chore.assignedBy = c.assignedBy
             chore.assignedTo = c.assignedTo
+            chore.showHumanDate(c.timeAssigned!!)
 
             choreListItems!!.add(chore)
         }
         adapter!!.notifyDataSetChanged()
 
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+//        return super.onCreateOptionsMenu(menu)
+        menuInflater.inflate(R.menu.top_menu,menu)
+
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+
+        if(item!!.itemId == R.id.addMenuButton){
+            Log.d("Item", "Menu button was clicked")
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 }
