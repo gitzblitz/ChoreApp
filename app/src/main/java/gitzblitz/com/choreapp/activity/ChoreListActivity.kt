@@ -1,13 +1,16 @@
 package gitzblitz.com.choreapp.activity
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.text.TextUtils
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import gitzblitz.com.choreapp.R
 import gitzblitz.com.choreapp.data.ChoreListAdapter
 import gitzblitz.com.choreapp.data.ChoresDatabaseHandler
@@ -16,7 +19,7 @@ import kotlinx.android.synthetic.main.activity_chore_list.*
 import kotlinx.android.synthetic.main.popup.view.*
 
 class ChoreListActivity : AppCompatActivity() {
-
+    private val TAG: String = "CHORELISTACTIVITY"
     private var adapter: ChoreListAdapter? = null
     private var choreList: ArrayList<Chore>? = null
     private var choreListItems: ArrayList<Chore>? = null
@@ -44,6 +47,7 @@ class ChoreListActivity : AppCompatActivity() {
         choreRecyclerView.adapter = adapter
 
         choreList  = databaseHandler!!.readChores()
+        choreList!!.reverse()
 
 
 
@@ -72,7 +76,7 @@ class ChoreListActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
 
         if(item!!.itemId == R.id.addMenuButton){
-            Log.d("Item", "Menu button was clicked")
+            Log.d(TAG, "Menu button was clicked")
             createPopupDialog()
         }
 
@@ -87,11 +91,36 @@ class ChoreListActivity : AppCompatActivity() {
         var assignedTo = view.popupAssignToId
         var popSaveButton = view.popupBtnSaveChore
 
-
         dialogBuilder = AlertDialog.Builder(this).setView(view)
         dialog = dialogBuilder!!.create()
         dialog!!.show()
 
+
+        popSaveButton.setOnClickListener {
+            var name = choreName.text.toString().trim()
+            var aBy = assignedBy.text.toString().trim()
+            var aTo = assignedTo.text.toString().trim()
+
+            if (!TextUtils.isEmpty(name)
+                && !TextUtils.isEmpty(aBy) && !TextUtils.isEmpty(aTo)){
+                var chore = Chore()
+                chore.choreName = name
+                chore.assignedTo = aTo
+                chore.assignedBy = aBy
+
+                databaseHandler!!.createChore(chore)
+
+                dialog!!.dismiss()
+                startActivity(Intent(this, ChoreListActivity::class.java))
+                finish()
+                Log.d(TAG, "Chore added")
+                Toast.makeText(this, " Chore Added", Toast.LENGTH_LONG).show()
+            } else{
+                Toast.makeText(this, " Chore not added", Toast.LENGTH_LONG).show()
+                Log.e(TAG, "Chore not added to database")
+
+            }
+        }
 
     }
 }
